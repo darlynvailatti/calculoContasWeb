@@ -9,7 +9,7 @@ public class Criptografia {
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		 
         BigInteger hash = new BigInteger(1, md.digest(s.getBytes()));
- 
+        System.out.println("teste");
         return String.format("%32x", hash);
 	}
 }
