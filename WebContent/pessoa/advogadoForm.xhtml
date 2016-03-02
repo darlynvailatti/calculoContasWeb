@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+	<ui:composition template="/template.xhtml">
+	
+		<!-- Título -->
+		<ui:define name="title">Advogado</ui:define>
+
+		<!-- Início conteúdo -->
+		<ui:define name="centerContent">
+		
+		<!-- Header Conteúdo -->
+		<f:facet name="header">Cadastro de Advogado</f:facet>
+		
+			<h:form prependId="false">
+				<!-- Parametros recebidos -->
+				<f:metadata>
+					<f:viewParam name="id" value="#{advogadoBean.advogado.id}"></f:viewParam>
+					<f:event listener="#{advogadoBean.preRenderView}"
+						type="preRenderView"></f:event>
+				</f:metadata>
+					
+				
+				<p:panelGrid id="advogadoForm">
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel value="Id" />
+					</p:column>
+					<p:column colspan="2">
+						<h:inputHidden value="#{advogadoBean.advogado.id}">	
+							<h:outputText value="#{advogadoBean.advogado.id}"></h:outputText>
+						</h:inputHidden>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel for="advogadoNome" value="Nome fantasia"/>
+					</p:column>
+					<p:column>
+						<p:inputText size="60" id="advogadoNome" value="#{advogadoBean.advogado.nome}"/>
+						<p:message for="advogadoNome"/>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel for="advogadoRazaoSocial" value="Razão Social"/>
+					</p:column>
+					<p:column>
+						<p:inputText size="60" id="advogadoRazaoSocial" value="#{advogadoBean.advogado.razaoSocial}"/>
+						<p:message for="advogadoRazaoSocial"/>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel for="advogadoCnpj" value="CNPJ"/>
+					</p:column>
+					<p:column>
+						<p:inputMask id="advogadoCnpj" mask="" value="#{advogadoBean.advogado.cnpj}"/>
+						<p:message for="advogadoCnpj"/>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel for="advogadoCpf" value="CPF"/>
+					</p:column>
+					<p:column>
+						<p:inputMask id="advogadoCpf" mask="" value="#{advogadoBean.advogado.cpf}"/>
+						<p:message for="advogadoCpf"/>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel for="advogadoNumeroOab" value="Número OAB"/>
+					</p:column>
+					<p:column>
+						<p:inputMask id="advogadoNumeroOab" mask="" 
+							value="#{advogadoBean.advogado.numeroOab}"
+							required="true"/>
+						<p:message for="advogadoNumeroOab"/>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel for="advogadoEstadoOab" value="Estado OAB"/>
+					</p:column>
+					<p:column>
+						<p:selectOneMenu id="advogadoEstadoOab" value="#{advogadoBean.advogado.estadoOab}">
+							<f:selectItem itemLabel="--Selecione--"></f:selectItem>
+							<f:selectItems value="#{advogadoBean.estados}" var="estado" itemValue="#{estado}" ></f:selectItems>
+						</p:selectOneMenu>
+						<p:message for="advogadoEstadoOab"/>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<!-- Salvar -->
+					<p:column colspan="3">
+						<p:splitButton value="Salvar" action="#{advogadoBean.salvar}" update="@form" >
+						<p:menuitem value="Salvar e sair"
+							action="#{advogadoBean.salvarEsair}" />
+						</p:splitButton>	
+						
+					<!-- Voltar  -->
+					<p:commandButton value="Fechar" action="/pessoa/advogadoList.xhtml?faces-redirect=true" 
+					immediate="true"></p:commandButton>
+					
+					</p:column>
+				</p:row>
+				</p:panelGrid>
+			</h:form>
+			
+		</ui:define>
+		<!-- Fim conteúdo -->
+		
+			
+
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+
+
+	<ui:composition template="/template.xhtml">
+
+		<!-- Título -->
+		<ui:define name="title">Escritorio</ui:define>
+
+		<!-- Início conteúdo -->
+		<ui:define name="centerContent">
+
+			<!-- Header Conteúdo -->
+			<f:facet name="header">Consulta Escritorio</f:facet>
+
+			<p:panelGrid columns="1" id="dataTable">
+				<h:form>
+					<p:commandButton value="Novo" action="/pessoa/escritorioForm.xhtml?faces-redirect=true">
+					</p:commandButton>
+				</h:form>
+				<p:dataTable value="#{escritorioBean.escritorios}"
+					var="escritorio" paginator="true" scrollable="true" scrollHeight="400"
+					sortMode="multiple" filteredValue="#{escritorioBean.escritoriosFiltrados}">
+
+					<p:column width="30">
+						<p:link outcome="#{ContextPath}/pessoa/escritorioForm.xhtml" value="Editar">
+							<f:param name="id" value="#{escritorio.id}"></f:param>
+						</p:link>
+					</p:column>
+
+					<p:column width="30">
+						<p:commandLink value="Excluir"
+							action="#{escritorioBean.excluir(escritorio)}"
+							update="dataTable">
+							<p:confirm header="Confirmação" message="Você tem certeza que deseja excluir?"
+								icon="ui-icon-alert"/>
+						</p:commandLink>
+					</p:column>
+
+					<p:column headerText="Id" sortBy="#{escritorio.id}">
+						<h:outputText value="#{escritorio.id}"></h:outputText>
+					</p:column>
+					
+					<p:column headerText="Nome Fantasia" sortBy="#{escritorio.nome}" 
+					 filterBy="#{escritorio.nome}" filterMatchMode="contains">
+						<h:outputText value="#{escritorio.nome}"></h:outputText>
+					</p:column>
+					
+					<p:column headerText="Razão social" sortBy="#{escritorio.razaoSocial}" 
+					 filterBy="#{escritorio.razaoSocial}" filterMatchMode="contains">
+						<h:outputText value="#{escritorio.razaoSocial}"></h:outputText>
+					</p:column>
+					
+					<p:column headerText="Cnpj" sortBy="#{escritorio.cnpj}" 
+					 filterBy="#{escritorio.cnpj}" filterMatchMode="contains">
+						<h:outputText value="#{escritorio.cnpj}"></h:outputText>
+					</p:column>
+
+					<p:column headerText="Cpf" sortBy="#{escritorio.cpf}" 
+					 filterBy="#{escritorio.cpf}" filterMatchMode="contains">
+						<h:outputText value="#{escritorio.cpf}"></h:outputText>
+					</p:column>
+
+				</p:dataTable>
+			</p:panelGrid>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

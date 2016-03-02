@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title><ui:insert name="title"></ui:insert></title>
+
+</h:head>
+
+
+<h:body>
+	<style>
+	
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 95% !important;
+}
+
+.layout .ui-layout-unit .ui-layout-unit-content {
+            padding: 0em 0em;
+            border: 0px none;
+            overflow: hidden !important;
+}
+</style>
+	
+	<!-- Globais -->
+	
+		<!-- Timteout sessao -->
+		<p:idleMonitor timeout="1800000">
+			<p:ajax event="idle" listener="#{login.logout}"/>
+		</p:idleMonitor>
+	
+		<!-- Avisos gerais  -->
+		<p:growl autoUpdate="true" life="15000"></p:growl>
+		
+		<!-- Confirmation dialog -->
+		<p:confirmDialog global="true">
+			<p:commandButton value="Sim" type="button"
+			styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="Não" type="button"
+			styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+		
+	<!--  Dialog de carregamento -->	
+	<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()">
+	
+	</p:ajaxStatus>
+	
+	<p:layout fullPage="true">
+
+		<!-- Header principal -->
+		<p:layoutUnit position="north" size="40" style="padding:0px; border:0px;">
+      		<ui:include src="/menuPadrao.xhtml"></ui:include>
+		</p:layoutUnit>
+
+		
+
+
+		<!-- Conteúdo principal -->
+		<p:layoutUnit position="center" style="padding:0px; border:0px;">
+			<p:layout>
+			
+				<!-- Conteúdo -->
+				<p:layoutUnit position="center" size="40">
+					<ui:insert name="centerContent"></ui:insert>
+				</p:layoutUnit>
+			</p:layout>
+		</p:layoutUnit>
+
+	</p:layout>
+	
+	
+	
+	<!--Dialogs  -->
+		<ui:insert name="dialogs">
+		
+			<!-- Dialog de carregamento -->
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false"> 
+				<p:graphicImage url="/resources/30.GIF"></p:graphicImage>
+			</p:dialog>
+			
+			
+		</ui:insert>
+	
+	
+</h:body>
+</html>

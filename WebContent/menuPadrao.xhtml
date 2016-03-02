@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<style>
+.ui-layout-north {
+	z-index: 20 !important;
+	overflow: visible !important;
+}
+
+.ui-layout-north .ui-layout-unit-content {
+	overflow: visible !important;
+}
+</style>
+</h:head>
+<h:body>
+	<h:form id="menuForm">
+		<p:menubar>
+			<p:submenu label="Geral" icon="ui-icon-document">
+				<p:submenu label="Calculo">
+					<p:submenu label="Cadastros">
+						<p:menuitem value="Metodologias" url="/faces/metodologia/metodologiaList.xhtml" />
+					</p:submenu>
+				</p:submenu>
+				
+				<p:submenu label="Comarcas">
+					<p:menuitem value="Comarca" url="/faces/comarca/comarcaList.xhtml"/>
+					<p:menuitem value="Comarca vara" url="/faces/comarca/comarcaVaraList.xhtml"/>
+					<p:menuitem value="Municipios" url="/faces/municipio/municipioList.xhtml"/>
+				</p:submenu>
+				
+					
+				<p:submenu label="Pessoas">
+					<p:menuitem value="Réus" url="/faces/pessoa/reuList.xhtml"/>
+					<p:menuitem value="Autores" url="/faces/pessoa/autorList.xhtml"/>
+					<p:menuitem value="Advogados" url="/faces/pessoa/advogadoList.xhtml"/>
+					<p:menuitem value="Escritóros" url="/faces/pessoa/escritorioList.xhtml"/>
+				</p:submenu>
+				
+				<p:submenu label="Usuários">
+					<p:menuitem value="Consulta usuários" url="/faces/usuario/usuarioList.xhtml"/>
+				</p:submenu>
+				
+			</p:submenu>
+
+			<p:submenu label="Processos" icon="ui-icon-pencil">
+				<p:menuitem value="Processos" url="/faces/processo/processoList.xhtml" icon="ui-icon-arrowreturnthick-1-w" />
+				<p:submenu label="Cadastros">
+					<p:menuitem value="Categoria" url="/faces/categoria/categoriaList.xhtml"></p:menuitem>
+				</p:submenu>	
+			</p:submenu>
+
+			<p:submenu label="Help" icon="ui-icon-help">
+				<p:menuitem value="Contents" url="#" />
+				<p:submenu label="Search" icon="ui-icon-search">
+					<p:submenu label="Text">
+						<p:menuitem value="Workspace" url="#" />
+					</p:submenu>
+					<p:menuitem value="File" url="#" />
+				</p:submenu>
+			</p:submenu>
+
+			<p:submenu label="Actions" icon="ui-icon-gear">
+				<p:submenu label="Ajax" icon="ui-icon-refresh">
+					<p:menuitem value="Save" icon="ui-icon-disk" />
+					<p:menuitem value="Update" icon="ui-icon-arrowrefresh-1-w" />
+				</p:submenu>
+				<p:submenu label="Non-Ajax" icon="ui-icon-newwin">
+					<p:menuitem value="Delete" icon="ui-icon-close" update="messages"
+						ajax="false" />
+				</p:submenu>
+			</p:submenu>
+
+			<f:facet name="options">
+				<h:panelGrid columns="4">
+					<p:outputLabel value="Usuário ativo:"></p:outputLabel>
+					<h:outputText value='#{login.usuario.login}'></h:outputText>
+					<p:inputText style="margin-right:10px" placeholder="Pesquisar" />
+					<h:form>
+						<p:commandButton value="Sair" icon="ui-icon-extlink" 
+						action="#{login.logout}"/>
+					</h:form>
+				</h:panelGrid>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+</h:body>
+</html>

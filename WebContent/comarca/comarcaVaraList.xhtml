@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+
+
+	<ui:composition template="/template.xhtml">
+
+		<!-- Título -->
+		<ui:define name="title">ComarcaVara</ui:define>
+
+		<!-- Início conteúdo -->
+		<ui:define name="centerContent">
+
+			<!-- Header Conteúdo -->
+			<f:facet name="header">Consulta ComarcaVara</f:facet>
+
+			<p:panelGrid columns="1" id="dataTable">
+				<h:form>
+					<p:commandButton value="Novo" action="/comarca/comarcaVaraForm.xhtml?faces-redirect=true">
+					</p:commandButton>
+				</h:form>
+				<p:dataTable value="#{comarcaVaraBean.comarcaVaras}"
+					var="comarcaVara" paginator="true" scrollable="true" scrollHeight="400"
+					sortMode="multiple">
+
+					<p:column width="30">
+						<p:link outcome="#{ContextPath}/comarca/comarcaVaraForm.xhtml" value="Editar">
+							<f:param name="id" value="#{comarcaVara.id}"></f:param>
+						</p:link>
+					</p:column>
+
+					<p:column width="30">
+						<p:commandLink value="Excluir"
+							action="#{comarcaVaraBean.excluir(comarcaVara)}"
+							update="dataTable">
+							<p:confirm header="Confirmação" message="Você tem certeza que deseja excluir?"
+								icon="ui-icon-alert"/>
+						</p:commandLink>
+					</p:column>
+
+					<p:column headerText="Id" sortBy="#{comarcaVara.id}">
+						<h:outputText value="#{comarcaVara.id}"></h:outputText>
+					</p:column>
+
+					<p:column headerText="Número" sortBy="#{comarcaVara.numero}">
+						<h:outputText value="#{comarcaVara.numero}"></h:outputText>
+					</p:column>
+					
+					<p:column headerText="Descrição" sortBy="#{comarcaVara.descricao}">
+						<h:outputText value="#{comarcaVara.descricao}"></h:outputText>
+					</p:column>
+
+				</p:dataTable>
+			</p:panelGrid>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

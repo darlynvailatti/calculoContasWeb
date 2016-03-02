@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+
+
+	<ui:composition template="/template.xhtml">
+
+		<!-- Título -->
+		<ui:define name="title">Categoria</ui:define>
+
+		<!-- Início conteúdo -->
+		<ui:define name="centerContent">
+
+			<!-- Header Conteúdo -->
+			<f:facet name="header">Consulta Categoria</f:facet>
+
+			<p:panelGrid id="dataTable">
+				<h:form>
+					<p:row>
+						<p:column>
+							<p:commandButton value="Novo"
+								action="/categoria/categoriaForm.xhtml?faces-redirect=true">
+							</p:commandButton>
+						</p:column>
+					</p:row>
+					
+					<p:row>
+					<p:column>
+					<p:dataTable value="#{categoriaBean.categorias}" var="categoria"
+						paginator="true" scrollable="true" scrollHeight="400"
+						sortMode="multiple"
+						filteredValue="#{categoriaBean.categoriasFiltradas}">
+
+						<p:column width="30">
+							<p:link outcome="#{ContextPath}/categoria/categoriaForm.xhtml"
+								value="Editar">
+								<f:param name="id" value="#{categoria.id}"></f:param>
+							</p:link>
+						</p:column>
+
+						<p:column width="30">
+							<p:commandLink value="Excluir"
+								action="#{categoriaBean.excluir(categoria)}" update="dataTable">
+								<p:confirm header="Confirmação"
+									message="Você tem certeza que deseja excluir?"
+									icon="ui-icon-alert" />
+							</p:commandLink>
+						</p:column>
+
+						<p:column headerText="Id" sortBy="#{categoria.id}">
+							<h:outputText value="#{categoria.id}"></h:outputText>
+						</p:column>
+
+						<p:column headerText="Descrição"
+							sortBy="#{categoria.descricao}"
+							filterBy="#{categoria.descricao}" filterMatchMode="contains">
+							<h:outputText value="#{categoria.descricao}" />
+						</p:column>
+
+					</p:dataTable>
+					</p:column>
+					</p:row>
+				</h:form>
+			</p:panelGrid>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+
+
+	<ui:composition template="/template.xhtml">
+
+		<!-- Título -->
+		<ui:define name="title">Comarca</ui:define>
+
+		<!-- Início conteúdo -->
+		<ui:define name="centerContent">
+
+			<!-- Header Conteúdo -->
+			<f:facet name="header">Consulta Comarca</f:facet>
+
+			<p:panelGrid id="dataTable">
+				<h:form>
+					<p:row>
+						<p:column>
+							<p:commandButton value="Novo"
+								action="/comarca/comarcaForm.xhtml?faces-redirect=true">
+							</p:commandButton>
+						</p:column>
+					</p:row>
+					
+					<p:row>
+					<p:column>
+					<p:dataTable value="#{comarcaBean.comarcas}" var="comarca"
+						paginator="true" scrollable="true" scrollHeight="400"
+						sortMode="multiple"
+						filteredValue="#{comarcaBean.comarcasFiltradas}">
+
+						<p:column width="30">
+							<p:link outcome="#{ContextPath}/comarca/comarcaForm.xhtml"
+								value="Editar">
+								<f:param name="id" value="#{comarca.id}"></f:param>
+							</p:link>
+						</p:column>
+
+						<p:column width="30">
+							<p:commandLink value="Excluir"
+								action="#{comarcaBean.excluir(comarca)}" update="dataTable">
+								<p:confirm header="Confirmação"
+									message="Você tem certeza que deseja excluir?"
+									icon="ui-icon-alert" />
+							</p:commandLink>
+						</p:column>
+
+						<p:column headerText="Id" sortBy="#{comarca.id}">
+							<h:outputText value="#{comarca.id}"></h:outputText>
+						</p:column>
+
+						<p:column headerText="Municipio"
+							sortBy="#{comarca.municipio.nome}"
+							filterBy="#{comarca.municipio.nome}" filterMatchMode="contains">
+							<h:outputText value="#{comarca.municipio.nome}" />
+						</p:column>
+
+						<p:column headerText="Estado" filterable="true"
+							filterBy="#{comarca.municipio.estado}" filterMatchMode="contains">
+							<h:outputText value="#{comarca.municipio.estado}" />
+						</p:column>
+
+						<p:column headerText="Cnpj" sortBy="#{comarca.cnpj}"
+							filterBy="#{comarca.cnpj}" filterMatchMode="contains">
+							<h:outputText value="#{comarca.cnpj}"></h:outputText>
+						</p:column>
+
+					</p:dataTable>
+					</p:column>
+					</p:row>
+				</h:form>
+			</p:panelGrid>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+
+
+	<ui:composition template="/template.xhtml">
+
+		<!-- Título -->
+		<ui:define name="title">Metodologia</ui:define>
+
+		<!-- Início conteúdo -->
+		<ui:define name="centerContent">
+
+			<!-- Header Conteúdo -->
+			<f:facet name="header">Consulta Metodologia</f:facet>
+
+			<p:panelGrid columns="1" id="dataTable">
+				<h:form>
+					<p:commandButton value="Gerar relatório" action="#{metodologiaBean.exportMetodologiaToPdf}"
+					ajax="false">
+					</p:commandButton>
+					<p:commandButton value="Novo" action="/metodologia/metodologiaForm.xhtml?faces-redirect=true">
+					</p:commandButton>
+				</h:form>
+				<p:dataTable value="#{metodologiaBean.metodologias}"
+					var="metodologia" paginator="true" scrollable="true" scrollHeight="400"
+					sortMode="multiple">
+
+					<p:column width="30">
+						<p:link outcome="#{ContextPath}/metodologia/metodologiaForm.xhtml" value="Editar">
+							<f:param name="id" value="#{metodologia.id}"></f:param>
+						</p:link>
+					</p:column>
+
+					<p:column width="30">
+						<p:commandLink value="Excluir"
+							action="#{metodologiaBean.excluir(metodologia)}"
+							update="dataTable">
+							<p:confirm header="Confirmação" message="Você tem certeza que deseja excluir?"
+								icon="ui-icon-alert"/>
+						</p:commandLink>
+					</p:column>
+
+					<p:column headerText="Id" sortBy="#{metodologia.id}">
+						<h:outputText value="#{metodologia.id}"></h:outputText>
+					</p:column>
+
+					<p:column headerText="Descricao" sortBy="#{metodologia.descricao}" 
+					 filterBy="#{metodologia.descricao}" filterMatchMode="contains">
+						<h:outputText value="#{metodologia.descricao}"></h:outputText>
+					</p:column>
+
+				</p:dataTable>
+			</p:panelGrid>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

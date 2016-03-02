@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<style>
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 90% !important;
+}
+</style>
+</h:head>
+<h:body>
+
+	<!--  Dialog de carregamento -->
+	<p:ajaxStatus onstart="PF('statusDialog').show()"
+		onsuccess="PF('statusDialog').hide()">
+	</p:ajaxStatus>
+	<!-- Dialog de carregamento -->
+			<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false"> 
+				<p:graphicImage url="/resources/30.GIF"></p:graphicImage>
+			</p:dialog>
+		
+	<p:growl autoUpdate="true" />
+	<f:event type="preRenderView" listener="#{login.preRenderView}" />
+
+	
+		<h:form>
+			<p:dialog closable="false" draggable="false" modal="true"
+				dynamic="true" header="Cálculo e Contas" visible="true" resizable="false">
+
+				<h:panelGrid columns="2" id="loginForm">
+					<p:outputLabel value="Login" for="login" />
+					<p:inputText id="login" value="#{login.usuario.login}"
+						required="true" />
+
+					<p:outputLabel value="Senha" for="password" />
+					<p:password id="password" value="#{login.usuario.password}"
+						required="true" />
+
+					<p:commandButton action="#{login.validateUsernamePassword}"
+						value="Entrar" update="loginForm" />
+				</h:panelGrid>
+
+			</p:dialog>
+		</h:form>
+	
+
+</h:body>
+</html>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+	<ui:composition template="/template.xhtml">
+	
+		<!-- Título -->
+		<ui:define name="title">Escritorio</ui:define>
+
+		<!-- Início conteúdo -->
+		<ui:define name="centerContent">
+		
+		<!-- Header Conteúdo -->
+		<f:facet name="header">Cadastro de Escritorio</f:facet>
+		
+			<h:form prependId="false">
+				<!-- Parametros recebidos -->
+				<f:metadata>
+					<f:viewParam name="id" value="#{escritorioBean.escritorio.id}"></f:viewParam>
+					<f:event listener="#{escritorioBean.preRenderView}"
+						type="preRenderView"></f:event>
+				</f:metadata>
+					
+			<p:tabView id="escritorioFormAll">
+				<p:tab title="Escritório">
+				
+				<p:panelGrid id="escritorioForm">
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel value="Id" />
+					</p:column>
+					<p:column colspan="2">
+						<h:inputHidden value="#{escritorioBean.escritorio.id}">	
+							<h:outputText value="#{escritorioBean.escritorio.id}"></h:outputText>
+						</h:inputHidden>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel for="escritorioNome" value="Nome fantasia"/>
+					</p:column>
+					<p:column>
+						<p:inputText size="60" id="escritorioNome" value="#{escritorioBean.escritorio.nome}"/>
+						<p:message for="escritorioNome"/>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel for="escritorioRazaoSocial" value="Razão Social"/>
+					</p:column>
+					<p:column>
+						<p:inputText size="60" id="escritorioRazaoSocial" value="#{escritorioBean.escritorio.razaoSocial}"/>
+						<p:message for="escritorioRazaoSocial"/>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel for="escritorioCnpj" value="CNPJ"/>
+					</p:column>
+					<p:column>
+						<p:inputMask id="escritorioCnpj" mask="" value="#{escritorioBean.escritorio.cnpj}"/>
+						<p:message for="escritorioCnpj"/>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel for="escritorioCpf" value="CPF"/>
+					</p:column>
+					<p:column>
+						<p:inputMask id="escritorioCpf" mask="" value="#{escritorioBean.escritorio.cpf}"/>
+						<p:message for="escritorioCpf"/>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<!-- Salvar -->
+					<p:column colspan="3">
+						<p:splitButton value="Salvar" action="#{escritorioBean.salvar}" update="escritorioFormAll" >
+						<p:menuitem value="Salvar e sair"
+							action="#{escritorioBean.salvarEsair}" />
+						</p:splitButton>	
+						
+					<!-- Voltar  -->
+					<p:commandButton value="Fechar" action="/pessoa/escritorioList.xhtml?faces-redirect=true" 
+					immediate="true"></p:commandButton>
+					
+					</p:column>
+				</p:row>
+				</p:panelGrid>
+				</p:tab>
+				
+				
+				<p:tab title="Advogados" id="advogadosTab">
+					<p:panelGrid>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Advogado (CNPJ ?, Fantasia ?, Razão Social?)"/>
+								<p:spacer width="10"></p:spacer>
+									<p:autoComplete value="#{escritorioBean.advogado}"
+									 completeMethod="#{escritorioBean.autoCompleteAdvogado}"
+									 var="advogado"
+									 itemLabel="#{advogado.nome}"
+									 itemValue="#{advogado}"
+									 converter="AdvogadoEntityConverter"
+									 forceSelection="true"
+									 size="80"
+									 >
+									 <p:column headerText="Nome">
+									 	<h:outputText value="#{advogado.nome}"/>
+									 </p:column>
+									 <p:column headerText="CNPJ">
+									 	<h:outputText value="#{advogado.cnpj}"/>
+									 </p:column>
+									 <p:column headerText="Número Oab">
+									 	<h:outputText value="#{advogado.numeroOab}"/>
+									 </p:column>
+									 </p:autoComplete>
+									 <p:commandButton value="Adicionar" action="#{escritorioBean.adicionarAdovgadoParaEscritorio}" 
+									 update="escritorioFormAll"/>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="4">
+								<p:dataTable id="advogadoTable" value="#{escritorioBean.escritorio.advogados}" var="advogado" paginator="true">
+									<p:column>
+										<p:commandLink value="Remover" action="#{escritorioBean.removeAdvogado(advogado)}" update="advogadoTable"></p:commandLink>									
+									</p:column>
+									<p:column headerText="Id">
+										<h:outputText value="#{advogado.id}"></h:outputText>
+									</p:column>
+									<p:column headerText="Nome Fantasia" filterBy="#{advogado.nome}" filterMatchMode="contains">
+										<h:outputText value="#{advogado.nome}"></h:outputText>
+									</p:column>
+									<p:column headerText="Razão social" filterBy="#{advogado.razaoSocial}" filterMatchMode="contains">
+										<h:outputText value="#{advogado.razaoSocial}"></h:outputText>
+									</p:column>
+									<p:column headerText="CNPJ" filterBy="#{advogado.cnpj}" filterMatchMode="contains">
+										<h:outputText value="#{advogado.cnpj}"></h:outputText>
+									</p:column>
+									
+								</p:dataTable>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:tab>
+				
+				
+				<p:tab title="Contratos">
+					
+				</p:tab>
+				
+				
+				</p:tabView>
+			</h:form>
+			
+		</ui:define>
+		<!-- Fim conteúdo -->
+		
+			
+
+	</ui:composition>
+</h:body>
+</html>

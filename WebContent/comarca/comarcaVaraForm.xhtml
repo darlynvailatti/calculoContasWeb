@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+	<ui:composition template="/template.xhtml">
+	
+		<!-- Título -->
+		<ui:define name="title">ComarcaVara</ui:define>
+
+		<!-- Início conteúdo -->
+		<ui:define name="centerContent">
+		
+		<!-- Header Conteúdo -->
+		<f:facet name="header">Cadastro de ComarcaVara</f:facet>
+		
+			<h:form prependId="false">
+				<!-- Parametros recebidos -->
+				<f:metadata>
+					<f:viewParam name="id" value="#{comarcaVaraBean.comarcaVara.id}"></f:viewParam>
+					<f:event listener="#{comarcaVaraBean.preRenderView}"
+						type="preRenderView"></f:event>
+				</f:metadata>
+					
+				
+				<p:panelGrid id="comarcaVaraForm">
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel value="Id" />
+					</p:column>
+					<p:column colspan="2">
+						<h:inputHidden value="#{comarcaVaraBean.comarcaVara.id}">	
+							<h:outputText value="#{comarcaVaraBean.comarcaVara.id}"></h:outputText>
+						</h:inputHidden>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel for="comarcaVaraNumero" value="Número"/>
+					</p:column>
+						
+					<p:column>
+						<p:inputText id="comarcaVaraNumero" value="#{comarcaVaraBean.comarcaVara.numero}"/>
+						<p:message for="comarcaVaraNumero"/>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel for="comarcaVaraDescricao" value="Descrição"/>
+					</p:column>
+						
+					<p:column>
+						<p:inputText id="comarcaVaraDescricao" value="#{comarcaVaraBean.comarcaVara.descricao}"/>
+						<p:message for="comarcaVaraDescricao"/>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<!-- Salvar -->
+					<p:column colspan="3">
+						<p:splitButton value="Salvar" action="#{comarcaVaraBean.salvar}" update="comarcaVaraForm">
+						<p:menuitem value="Salvar e sair"
+							action="/comarca/comarcaVaraList.xhtml?faces-redirect=true" update="comarcaVaraForm"/>
+						</p:splitButton>	
+						
+					<!-- Voltar  -->
+					<p:commandButton value="Fechar" action="/comarca/comarcaVaraList.xhtml?faces-redirect=true" 
+					immediate="true"></p:commandButton>
+					
+					</p:column>
+				</p:row>
+				</p:panelGrid>
+			</h:form>
+			
+		</ui:define>
+		<!-- Fim conteúdo -->
+
+	</ui:composition>
+</h:body>
+</html>

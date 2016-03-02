@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+	<ui:composition template="/template.xhtml">
+
+		<!-- Título -->
+		<ui:define name="title">Processo</ui:define>
+
+		<!-- Início conteúdo -->
+		<ui:define name="centerContent">
+
+			<!-- Header Conteúdo -->
+			<f:facet name="header">Cadastro de Processo</f:facet>
+
+			<h:form prependId="false">
+				<!-- Parametros recebidos -->
+				<f:metadata>
+					<f:viewParam name="id" value="#{processoBean.processo.id}"></f:viewParam>
+					<f:event listener="#{processoBean.preRenderView}"
+						type="preRenderView"></f:event>
+				</f:metadata>
+
+				<p:tabView>
+
+
+					<p:tab title="Processo">
+						<p:panelGrid id="panelGridProcesso">
+							
+								<!-- ID -->
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Id"/>
+									</p:column>
+									<p:column colspan="3"> 
+										<h:outputText value="#{processoBean.processo.id}"/>
+									</p:column>
+								</p:row>
+								
+								<!-- Título -->
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Título"/>
+									</p:column>
+									<p:column colspan="3">
+										<p:inputText label="Título" id="processoTitulo"
+										value="#{processoBean.processo.titulo}" size="70"></p:inputText>
+										<p:message for="processoTitulo"/>
+									</p:column>
+								</p:row>
+								
+								<!-- Descrição  -->
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Descrição"/>
+									</p:column>
+									<p:column colspan="3">
+										<p:inputTextarea label="Descrição" id="processoDescricao"
+										value="#{processoBean.processo.descricao}" 
+										cols="110" rows="10"/>
+										<p:message for="processoDescricao"/>
+									</p:column>
+								</p:row>
+								
+								
+							    <p:row>
+							   		 <!-- Numero padrao -->
+									<p:column>
+										<p:outputLabel value="Número padrão"/>
+									</p:column>
+									<p:column>
+										<p:inputText label="Número padrão" id="processoNumeroPadrao"
+											value="#{processoBean.processo.numeroPadrao}" />
+										<p:message for="processoNumeroPadrao"/>
+									</p:column>
+								</p:row>
+																
+								<!-- Data transito em julgado -->
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Data trânsito em julgado"/>
+									</p:column>
+									<p:column>		
+										<p:inputMask label="Trânsito em julgado" id="processoDataTransitoEmJulgado"
+											 mask="99/99/9999" value="#{processoBean.processo.dataTransitoEmJulgado}"/>
+										<p:message for="processoDataTransitoEmJulgado"/>
+									</p:column>
+								</p:row>
+								
+								<!-- Data propositura -->
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Data propositura"/>
+									</p:column>
+									<p:column>		
+										<p:inputMask label="Propositura" id="processoDataPropositura"
+										mask="99/99/9999" value="#{processoBean.processo.dataPropositura}"/>
+										<p:message for="processoDataPropositura"/>
+									</p:column>
+								</p:row>
+								
+								<!-- Data despachoInaugural -->
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Data despacho inaugural"/>
+									</p:column>
+									<p:column>		
+										<p:inputMask label="Despacho inaugural" id="processoDataDespachoInaugural"
+											mask="99/99/9999" value="#{processoBean.processo.dataDespachoInaugural}"/>
+										<p:message for="processoDataDespachoInaugural"/>
+									</p:column>
+								</p:row>
+								
+								<!-- Categoria -->
+								<p:row>
+									<p:column>
+										<p:outputLabel for="processoCategoria" value="Categoria"/>
+									</p:column>
+									<p:column>	
+										<p:autoComplete id="processoCategoria"
+										 value="#{processoBean.processo.categoria}"
+										 completeMethod="#{processoBean.categoriaAutoComplete}"
+										 var="categoria"
+										 itemLabel="#{categoria.descricao}"
+										 itemValue="#{categoria}"
+										 converter="CategoriaEntityConverter"
+										 forceSelection="true"/>
+										<p:message for="processoCategoria"></p:message>	
+									</p:column>
+								</p:row>
+							
+								<!-- Números -->
+								<p:row>
+								<p:column colspan="4">
+									<p:panel id="panelNumeros" header="Números" toggleable="true">
+										<h:panelGrid>
+											<p:outputLabel for="processoNumeros" value="Número" />
+											<p:inputText id="processoNumeros"
+												value="#{processoBean.numero}" />
+											<p:commandButton value="Adicionar"
+												action="#{processoBean.addNumero}"
+												update="processoNumeroTable" />
+											<p:message for="processoNumeros" />
+
+
+											<p:dataTable id="processoNumeroTable" paginator="true"
+												 value="#{processoBean.processo.numeros}"
+												var="numero">
+												<h:outputText value="#{numero}" />
+											</p:dataTable>
+										</h:panelGrid>
+									</p:panel>
+									</p:column>
+								</p:row>
+								
+								
+								<!-- Números tribunal -->
+								<p:row>
+								<p:column colspan="4">
+									<p:panel id="panelNumerosTribunal" header="Números de Tribunal"
+										toggleable="true">
+										<h:panelGrid>
+											<p:outputLabel for="processoNumerosTribunais"
+												value="Número trbinual" />
+											<p:inputText id="processoNumerosTribunais"
+												value="#{processoBean.numero}" />
+											<p:commandButton value="Adicionar"
+												action="#{processoBean.addNumero}"
+												update="processoNumerosTribunaisTable" />
+											<p:message for="processoNumerosTribunais" />
+
+
+											<p:dataTable id="processoNumerosTribunaisTable" 
+												paginator="true" value="#{processoBean.processo.numeros}" var="numero">
+												<h:outputText value="#{numero}" />
+											</p:dataTable>
+										</h:panelGrid>
+									</p:panel>
+									</p:column>
+								</p:row>
+						</p:panelGrid>
+						<!-- Salvar -->
+						<p:splitButton value="Salvar" action="#{processoBean.salvar}"
+							update="@form">
+							<p:menuitem value="Salvar e sair"
+								action="#{processoBean.salvarEsair}" />
+						</p:splitButton>
+
+						<!-- Voltar  -->
+						<p:commandButton value="Fechar"
+							action="/processo/processoList.xhtml?faces-redirect=true"
+							immediate="true"></p:commandButton>
+
+					</p:tab>
+
+					<p:tab title="Réus">
+
+					</p:tab>
+
+
+					<p:tab title="Autores">
+
+					</p:tab>
+
+
+				</p:tabView>
+			</h:form>
+
+		</ui:define>
+		<!-- Fim conteúdo -->
+
+
+
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<h:body>
+
+
+	<ui:composition template="/template.xhtml">
+
+		<!-- Título -->
+		<ui:define name="title">Processo</ui:define>
+
+		<!-- Início conteúdo -->
+		<ui:define name="centerContent">
+
+			<!-- Header Conteúdo -->
+			<f:facet name="header">Consulta Processo</f:facet>
+
+			<p:panelGrid columns="1" id="dataTable">
+				<h:form>
+					<p:commandButton value="Novo" action="/processo/processoForm.xhtml?faces-redirect=true">
+					</p:commandButton>
+				</h:form>
+				<p:dataTable value="#{processoBean.processos}"
+					var="processo" paginator="true" scrollable="true" scrollHeight="400"
+					sortMode="multiple">
+
+					<p:column width="30">
+						<p:link outcome="#{ContextPath}/processo/processoForm.xhtml" value="Editar">
+							<f:param name="id" value="#{processo.id}"></f:param>
+						</p:link>
+					</p:column>
+
+					<p:column width="30">
+						<p:commandLink value="Excluir"
+							action="#{processoBean.excluir(processo)}"
+							update="dataTable">
+							<p:confirm header="Confirmação" message="Você tem certeza que deseja excluir?"
+								icon="ui-icon-alert"/>
+						</p:commandLink>
+					</p:column>
+
+					<p:column headerText="Id" sortBy="#{processo.id}" width="100">
+						<h:outputText value="#{processo.id}"></h:outputText>
+					</p:column>
+					
+					<p:column headerText="Título" sortBy="#{processo.titulo}" 
+					 filterBy="#{processo.titulo}" filterMatchMode="contains">
+						<h:outputText value="#{processo.titulo}"></h:outputText>
+					</p:column>
+					
+					<p:column headerText="N. Padrão" sortBy="#{processo.numeroPadrao}" 
+					 filterBy="#{processo.numeroPadrao}" filterMatchMode="contains">
+						<h:outputText value="#{processo.numeroPadrao}"></h:outputText>
+					</p:column>
+					
+					<p:column headerText="Trânsito em Julgado" sortBy="#{processo.dataTransitoEmJulgado}" 
+					 filterBy="#{processo.dataTransitoEmJulgado}" filterMatchMode="contains">
+						<h:outputText value="#{processo.dataTransitoEmJulgado}"></h:outputText>
+					</p:column>
+
+					<p:column headerText="Categoria" sortBy="#{processo.categoria.descricao}" 
+					 filterBy="#{processo.categoria.descricao}" filterMatchMode="contains">
+						<h:outputText value="#{processo.categoria.descricao}"></h:outputText>
+					</p:column>
+
+				</p:dataTable>
+			</p:panelGrid>
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>
